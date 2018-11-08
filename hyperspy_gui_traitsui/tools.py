@@ -110,21 +110,13 @@ class ImageContrastHandler(tu.Handler):
 
         return
 
-    @staticmethod
-    def reset(info):
-        """Handles the **Apply** button being clicked.
+    def reset(self, info):
+        """Handles the **Reset** button being clicked.
 
         """
         obj = info.object
         obj.reset()
         return
-
-    @staticmethod
-    def our_help(info):
-        """Handles the **Apply** button being clicked.
-
-        """
-        info.object._help()
 
 
 @register_traitsui_widget(toolkey="Signal1D.calibrate")
@@ -290,6 +282,7 @@ def remove_background_traitsui(obj, **kwargs):
         tu.Group(
             'background_type',
             'fast',
+            'zero_fill',
             tu.Group(
                 'polynomial_order',
                 visible_when='background_type == \'Polynomial\''), ),
