@@ -136,8 +136,9 @@ def axes_gui(obj, **kwargs):
     context = {}
     ag = []
     for n, axis in enumerate(obj._get_axes_in_natural_order()):
-        print('here', axis.linear)
-        ag.append(get_axis_group(n, label=get_axis_label(axis), linear=axis.linear,
+        print('here', axis.is_linear)
+        ag.append(get_axis_group(n, label=get_axis_label(axis),
+                                 linear=axis.is_linear,
                                  navigate=axis.navigate))
         context['axis%i' % n] = axis
     ag = tuple(ag)
