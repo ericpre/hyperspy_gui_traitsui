@@ -88,7 +88,7 @@ def get_navigation_sliders_group(obj):
     return axis_group, context
 
 
-def get_data_axis_view(navigate, linear, label):
+def get_data_axis_view(navigate, is_uniform, label):
     group_args = [
         tui.Item(name='name'),
         tui.Item(name='size', style='readonly'),
@@ -100,13 +100,13 @@ def get_data_axis_view(navigate, linear, label):
         group_args.extend([
             tui.Item(name='index'),
             tui.Item(name='value', style='readonly'), ])
-    if linear:
+    if is_uniform:
         calibration_group_args = [
             tui.Item(name='scale'),
             tui.Item(name='offset')]
     else:
         calibration_group_args = [
-            tui.Item(name='non-linear axis', style='readonly')]
+            tui.Item(name='non-uniform axis', style='readonly')]
     data_axis_view = tui.View(
         tui.Group(
             tui.Group(*group_args,
@@ -124,11 +124,11 @@ def get_data_axis_view(navigate, linear, label):
 def data_axis_traitsui(obj, **kwargs):
     return obj, {"view": get_data_axis_view(
         navigate=obj.navigate,
-        linear=obj.linear,
+        is_uniform=obj.is_uniform,
         label=get_axis_label(obj))}
 
 
-def get_axis_group(n, navigate, linear=True, label=''):
+def get_axis_group(n, navigate, is_uniform=True, label=''):
     group_args = [
         tui.Item('axis%i.name' % n),
         tui.Item('axis%i.size' % n, style='readonly'),
@@ -144,12 +144,12 @@ def get_axis_group(n, navigate, linear=True, label=''):
         group_args.extend([
             tui.Item('axis%i.index' % n, style='readonly'),
             tui.Item('axis%i.value' % n, style='readonly'), ])
-    if linear:
+    if is_uniform:
         calibration_group_args = [
             tui.Item('axis%i.scale' % n),
             tui.Item('axis%i.offset' % n)]
     else:
-        calibration_group_args = [tui.Item('non-linear axis', style='readonly')]            
+        calibration_group_args = [tui.Item('non-uniform axis', style='readonly')]
     group = tui.Group(
         tui.Group(*group_args,
                   show_border=True,),
@@ -166,9 +166,8 @@ def axes_gui(obj, **kwargs):
     context = {}
     ag = []
     for n, axis in enumerate(obj._get_axes_in_natural_order()):
-        print('here', axis.is_linear)
         ag.append(get_axis_group(n, label=get_axis_label(axis),
-                                 linear=axis.is_linear,
+                                 is_uniform=axis.is_uniform,
                                  navigate=axis.navigate))
         context['axis%i' % n] = axis
     ag = tuple(ag)
