@@ -55,13 +55,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install qtbase5-dev
-          sudo apt-get install libxkbcommon-x11-0
-          sudo apt-get install libxcb-icccm4
-          sudo apt-get install libxcb-image0
-          sudo apt-get install libxcb-keysyms1
-          sudo apt-get install libxcb-randr0
-          sudo apt-get install libxcb-render-util0
-          sudo apt-get install libxcb-xinerama0
 
       - name: Display version
         run: |
@@ -109,7 +102,6 @@ jobs:
       - name: Run test suite
         # run the tests headlessly
         run: |
-          sudo apt-get install xvfb
           xvfb-run pytest ${{ env.PYTEST_ARGS }} ${{ matrix.PYTEST_ARGS_COVERAGE }}
 
       - name: Upload coverage to Codecov
