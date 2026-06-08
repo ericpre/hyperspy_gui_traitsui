@@ -33,7 +33,7 @@ classifiers = [
 ]
 dependencies = [
   "hyperspy>=2.3.0",
-  "traits>=7.0", # to match hyperspy requirement
+  "traits>=7.0.2", # to match hyperspy requirement
   "traitsui>=7.3",
 ]
 dynamic = ["version"]
